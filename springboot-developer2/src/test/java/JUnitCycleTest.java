@@ -2,9 +2,8 @@ import org.junit.jupiter.api.*;
 
 public class JUnitCycleTest {
     // 전체 테스트를 시작하기 전에 1회 실행
-    // : static 키워드로 고정된 값을 실행
     // - static 키워드 사용 이유
-    // : 객체를 싱성하지 않고도 호출될 수 있음
+    // : 객체를 생성하지 않고도 호출될 수 있음
     // : 클래스가 로드될 때 한 번만 실행
     @BeforeAll
     static void beforeAll() {
@@ -41,7 +40,6 @@ public class JUnitCycleTest {
     }
 
     // 테스트 케이스를 종료하기 전마다 실행
-    // : public 설정
     @AfterEach
     public void afterEach() {
         System.out.println("@AfterEach");
@@ -49,5 +47,5 @@ public class JUnitCycleTest {
 }
 
 // @BeforeAll 클래스 레벨 설정
-// @BerforeEach > @Test > @AfterEach 가 테스트 개수만큼 반복
+// @BeforeEach > @Test > @AfterEach 가 테스트 개수만큼 반복
 // @AfterAll 클래스 레벨 정리

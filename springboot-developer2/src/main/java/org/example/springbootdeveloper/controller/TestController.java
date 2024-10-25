@@ -14,20 +14,20 @@ public class TestController {
     // : test() 메서드를 실행하여 Hello World!!! 문자열을 반환
 
     // @RestController: 라우터 역할을 하는 애너테이션
-    // cf) 라우터: HTTP 요청과 메서드를 연결하는 장치
+    // cf) 라우터
+    //     : HTTP 요청과 메서드를 연결하는 장치
 
     // @GetMapping 애너테이션
-    // : 메서드와 경로를 매핑할 때 스프링 부트에서 설정한 경로
+    // : 메서드와 경로를 매핑할 때 스프링부트에서 설정한 경로
     // http://localhost(사용중인컴퓨터):8080(포트번호)/test(경로)
 //    @GetMapping("/test")
 //    public String test() {
 //        return "Hello World!!!";
 //    }
-//}
 
     @Autowired
-    TestService testService; // 생성자를 직접 생성하지 않고 ds에 요청
-    // test의 @service에서 생성
+    TestService testService;
+
     @GetMapping("/test")
     public List<Member> getAllMembers() {
         List<Member> members = testService.getAllMembers();

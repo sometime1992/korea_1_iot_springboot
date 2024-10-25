@@ -1,18 +1,21 @@
 package org.example.springbootdeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.springbootdeveloper.common.constant.ApiMappingPattern;
 import org.example.springbootdeveloper.dto.request.BookRequestDto;
 import org.example.springbootdeveloper.dto.request.BookRequestUpdateDto;
 import org.example.springbootdeveloper.dto.response.BookResponseDto;
+import org.example.springbootdeveloper.dto.response.ResponseDto;
 import org.example.springbootdeveloper.entity.Category;
 import org.example.springbootdeveloper.service.BookService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/books")
+@RequestMapping(ApiMappingPattern.BOOK)
 @RequiredArgsConstructor
 // 초기화 되지 않은 final 필드나 @NonNull이 붙은 필드에 대해 생성자를 생성
 public class BookController {
@@ -26,9 +29,9 @@ public class BookController {
 
     // 책 생성
     @PostMapping
-    public ResponseEntity<BookResponseDto> createdBook(@RequestBody BookRequestDto requestDto) {
-        BookResponseDto createdBook = bookService.createBook(requestDto);
-        return ResponseEntity.ok(createdBook);
+    public ResponseEntity<ResponseDto<BookResponseDto>> createBook(@RequestBody BookRequestDto requestDto) {
+        ResponseDto<BookResponseDto> result = bookService.createBook(requestDto);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     // 전체 책 조회
@@ -38,7 +41,6 @@ public class BookController {
         return ResponseEntity.ok(books);
     }
 
-
     // 단건 책 조회
     @GetMapping("/{id}")
     public ResponseEntity<BookResponseDto> getBookById(@PathVariable Long id) {
@@ -46,20 +48,17 @@ public class BookController {
         return ResponseEntity.ok(book);
     }
 
-    // 제목에 특정 단어가 포함된 게시글 조회
+    // 제목에 특정 단어가 포함된 책 조회
     @GetMapping("/search/title")
     public ResponseEntity<List<BookResponseDto>> getBooksByTitleContaining(
             @RequestParam String keyword
-            // @RequestParam으로 중요하지 않은 정보를 url로 받아 전달(값을 전달하지 않고 보내려면 required = false지정)
     ) {
-        List<BookResponseDto> books = bookService.getBooksBytitleContaining(keyword);
+        List<BookResponseDto> books = bookService.getBooksByTitleContaining(keyword);
         return ResponseEntity.ok(books);
     }
 
     // 카테고리별 책 조회
-    @GetMapping("/category/{category}") // {} 변수,인자 값
-    //PathVariable을 사용하면 리소스 경로에 식별자를 넣어서 동적으로 URL에 정보를 담을 수 있다.
-    //URL 경로의 중괄호 { } 안쪽에 변수를 담고, 그 변수를 @PathVariable(" ")로 받아서 사용할 수 있다.
+    @GetMapping("/category/{category}")
     public ResponseEntity<List<BookResponseDto>> getBooksByCategory(@PathVariable Category category) {
         List<BookResponseDto> books = bookService.getBooksByCategory(category);
         return ResponseEntity.ok(books);
@@ -77,7 +76,7 @@ public class BookController {
 
     // 특정 id 책 수정
     @PutMapping("/{id}")
-    public ResponseEntity<BookResponseDto> updatedBook(
+    public ResponseEntity<BookResponseDto> updateBook(
             @PathVariable Long id, @RequestBody BookRequestUpdateDto requestDto
     ) {
         BookResponseDto updatedBook = bookService.updateBook(id, requestDto);

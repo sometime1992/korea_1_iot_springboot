@@ -93,7 +93,7 @@ public class StudentService {
             // 수정할 학생 데이터를 ID로 조회
             Student student = studentRepository.findById(id)
                     .orElseThrow(() -> new Error("Student not found with id" + id));
-            // 수정할 학생이 없는 경우 예외 발생
+                    // 수정할 학생이 없는 경우 예외 발생
 
             // 학생 정보 수정
             student.setName(studentDto.getName());
@@ -117,7 +117,7 @@ public class StudentService {
     }
 
     // 5) 특정 ID 학생 삭제
-    public void deleteStudent(Long id) { // URL에서 id를 받아옴
+    public void deleteStudent(Long id) {
         try {
             // 삭제할 학생 데이터를 ID로 조회
             Student student = studentRepository.findById(id)
@@ -126,7 +126,8 @@ public class StudentService {
                     );
             // 조회한 학생 객체를 DB에서 삭제
             studentRepository.delete(student);
-        } catch (Exception e) {
+
+        } catch(Exception e) {
             throw new ResponseStatusException(
                     HttpStatus.INTERNAL_SERVER_ERROR,
                     "Error occurred while deleting student", e
@@ -134,3 +135,10 @@ public class StudentService {
         }
     }
 }
+
+
+
+
+
+
+

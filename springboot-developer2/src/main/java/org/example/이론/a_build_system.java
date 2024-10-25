@@ -18,6 +18,4 @@ public class a_build_system {
     // : Maven에 비해 가독성이 높고 설정이 간단
     // : 빌드와 테스트 속도가 더 빠름
 
-
-
 }

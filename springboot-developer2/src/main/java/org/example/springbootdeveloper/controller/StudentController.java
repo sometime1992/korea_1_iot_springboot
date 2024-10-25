@@ -2,17 +2,18 @@ package org.example.springbootdeveloper.controller;
 
 import org.example.springbootdeveloper.dto.StudentDto;
 import org.example.springbootdeveloper.service.StudentService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 // @RestController
-// @Controller + @ResponseBody가 결합된 애너테이션
+// : @Controller + @ResponseBody가 결합된 애너테이션
 // : RESTful 웹 서비스의 컨트롤러임을 명시
 @RestController
 // @RequestMapping("경로")
-// : 해당 컨트롤러의 모든 요청이 URL이 "/api/students"로 시작함을 정의
+// : 해당 컨트롤러의 모든 요청 URL이 "/api/students"로 시작함을 정의
 @RequestMapping("/api/students")
 public class StudentController {
 
@@ -26,14 +27,14 @@ public class StudentController {
     }
 
     // 1) 학생 목록 조회 (GET) - 모든 학생 목록 반환
-    @GetMapping // HTTP GET 요청을 "/api/students" 경로에 매핑
+    @GetMapping // HTTP GET 요청을 처리 "/api/students" 경로에 매핑
     public List<StudentDto> getAllStudents() {
         return studentService.getAllStudents();
     }
 
     // 2) ID로 학생 조회 (GET) - 특정 ID의 학생 정보 반환
 
-    // "api/student/{id}" 경로로 오는 GET 요청을 처리
+    // "api/students/{id}" 경로로 오는 GET 요청을 처리
     // : {id}는 경로 변수로 사용
     @GetMapping("/{id}")
     public StudentDto getStudentById(@PathVariable Long id) {
@@ -46,7 +47,7 @@ public class StudentController {
     // HTTP POST 요청을 처리, "api/students" 경로와 매핑
     @PostMapping
     public StudentDto createStudent(@RequestBody StudentDto studentDto) {
-        // @RequestBody 중요한 정보 저장
+        // @RequestBody
         // : 클라이언트에서 전달된 JSON 데이터를 StudentDto 객체로 변환
         return studentService.createStudent(studentDto);
     }
@@ -54,9 +55,6 @@ public class StudentController {
     // 4) 학생 정보 수정 (PUT) - 특정 ID의 학생 정보를 수정
     @PutMapping("/{id}")
     public StudentDto updateStudent(@PathVariable Long id, @RequestBody StudentDto studentDto) {
-        // @PathVariable Long id - 수정할 id
-        // @RequestBody StudentDto studentDto - DB에 있는 학생 정보
-        // 수정할 id를 DB에 있는 정보에 수정후 삽입
         return studentService.updateStudent(id, studentDto);
     }
 
@@ -65,8 +63,6 @@ public class StudentController {
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.noContent().build();
-        // 응답 객체를 만들어내는 ResponseEntity - noContent()빈 응답 -  build 객체로 만듬
         // : HTTP 상태 코드의 204 No Content를 반환: 본문 없이 응답을 완료시킴
     }
-
 }

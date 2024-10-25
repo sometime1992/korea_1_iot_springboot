@@ -31,5 +31,4 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     // 반환타입 메서드명 (매개변수, ...) {
         // 메서드 구현부
     // }
-
 }

@@ -1,14 +1,11 @@
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 public class JUnitTest {
-    // @DisplayName
+    // @DsiplayName
     // : 테스트 이름을 명시
     @DisplayName("1 + 2는 3이다.")
     // @Test
-    // : 해당 애너테이션을 붙인 메서드는 테스트를 수행하는 메서드
-    // : 테스트를 실행하고 끝나면 삭제함
+    // : 해당 에너테이션을 붙인 메서드는 테스트를 수행하는 메서드
     @Test
     public void junitTest() {
         int a = 1;
@@ -30,8 +27,6 @@ public class JUnitTest {
 //        int b = 3;
 //        int sum = 3;
 //
-//        Assertions.assertEquals(sum, a+b);
+//        Assertions.assertEquals(sum, a + b);
 //    }
-
-    // 하나의 단위가 오류가 나면 전체 오류가 난다.
 }

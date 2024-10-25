@@ -1,9 +1,12 @@
 package org.example.springbootdeveloper.service;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.example.springbootdeveloper.common.constant.ResponseMessage;
 import org.example.springbootdeveloper.dto.request.BookRequestDto;
 import org.example.springbootdeveloper.dto.request.BookRequestUpdateDto;
 import org.example.springbootdeveloper.dto.response.BookResponseDto;
+import org.example.springbootdeveloper.dto.response.ResponseDto;
 import org.example.springbootdeveloper.entity.Book;
 import org.example.springbootdeveloper.entity.Category;
 import org.example.springbootdeveloper.repository.BookRepository;
@@ -13,22 +16,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor // 의존성 주입
+@RequiredArgsConstructor
 public class BookService {
+
     private final BookRepository bookRepository;
 
     // 1. 게시글 생성(Post)
-    public BookResponseDto createBook(BookRequestDto requestDto) {
-        Book book = new Book (
+    public ResponseDto<BookResponseDto> createBook(BookRequestDto requestDto) {
+        Book book = new Book(
                 null, requestDto.getWriter(), requestDto.getTitle(),
                 requestDto.getContent(), requestDto.getCategory()
         );
 
         Book savedBook = bookRepository.save(book);
-        return convertToResponseDto(savedBook);
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, convertToResponseDto(savedBook));
     }
 
-    // 2. 전체 게시글 조회
+    // 2. 전체 책 조회
     public List<BookResponseDto> getAllBooks() {
         return bookRepository.findAll()
                 .stream()
@@ -37,15 +41,20 @@ public class BookService {
                 .collect(Collectors.toList());
     }
 
-    // 3. 특정 ID  책 조회
+    // 3. 특정 ID 책 조회
     public BookResponseDto getBookById(Long id) {
-        Book book = bookRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("책을 찾을 수 없습니다.: " + id));
-        return convertToResponseDto(book);
+        try {
+            Book book = bookRepository.findById(id)
+                    .orElseThrow(() -> new IllegalArgumentException("책을 찾을 수 없습니다: " + id));
+            return convertToResponseDto(book);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new BookResponseDto();
+        }
     }
 
     // 3-1. 제목에 특정 단어가 포함된 책 조회
-    public List<BookResponseDto> getBooksBytitleContaining(String keyword) {
+    public List<BookResponseDto> getBooksByTitleContaining(String keyword) {
         List<Book> books = bookRepository.findByTitleContaining(keyword);
         return books.stream()
                 .map(this::convertToResponseDto)
@@ -64,7 +73,7 @@ public class BookService {
     public List<BookResponseDto> getBooksByCategoryAndWriter(Category category, String writer) {
         List<Book> books;
 
-        if(category == null) {
+        if (category == null) {
             books = bookRepository.findByWriter(writer);
         } else {
             books = bookRepository.findByCategoryAndWriter(category, writer);
@@ -75,14 +84,14 @@ public class BookService {
                 .collect(Collectors.toList());
     }
 
-    // 4. 특정 ID 책 수정
+    // 4, 특정 ID 책 수정
     public BookResponseDto updateBook(Long id, BookRequestUpdateDto updateDto) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("책을 찾을 수 없습니다: " + id));
 
         book.setTitle(updateDto.getTitle());
-        book.setContent((updateDto.getContent()));
-        book.setCategory(updateDto.getCategory() );
+        book.setContent(updateDto.getContent());
+        book.setCategory(updateDto.getCategory());
 
         Book updatedBook = bookRepository.save(book);
         return convertToResponseDto(updatedBook);
@@ -100,8 +109,4 @@ public class BookService {
                 , book.getContent(), book.getCategory()
         );
     }
-
-
-
-
 }

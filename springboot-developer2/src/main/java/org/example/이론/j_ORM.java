@@ -6,11 +6,10 @@ public class j_ORM {
     // : 객체와 관계형 데이터베이스 간의 데이터를 매핑해주는 기술
     // - 데이터베이스의 테이블과 애플리케이션의 객체 간의 구조적 불일치를 해결하는 솔루션
 
-    // ORM이 치환해줌
     // cf) RDBMS: user_password (lower_snake_case) - 테이블
     // cf) JAVA: userPassword (lowerCamelCase) - 클래스
 
-    // 1) ORM의 특징과 장점
+    // 1) ORM의 특징
     // - 객체와 테이블이 매핑: 1:1로 연결하여 데이터를 매핑
     // - 객체지향적인 데이터 조작: SQL 대신 자바 객체 메서드로 CRUD 작업 수행
     // >> 반복적인 SQL 작성 없이 데이터 조작 가능, DBMS에 독립적
@@ -19,7 +18,7 @@ public class j_ORM {
     // 2) ORM의 동작 원리
     // : 각 테이블은 클래스에, 테이블의 각 행(row)은 객체에 매핑
     // - Entity: 데이터베이스 테이블과 매핑되는 클래스
-    // - Field: 클래스의 필드는 테이블의 열(colum)에 해당
+    // - Field: 클래스의 필드는 테이블의 열(column)에 해당
 
     // 2. JPA(Java Persistence API)
     // : ORM의 종류 중 하나
@@ -31,31 +30,32 @@ public class j_ORM {
 
     // === 고객 테이블(Customer)
 //    create table Customer (
-//            id int primary key auto_increment,
-//            name varchar(50),
-//    email varchar(50)
+//        id int primary key auto_increment,
+//        name varchar(50),
+//        email varchar(50)
 //    );
 
     // === 고객 클래스(Customer)
 //    @Entity
 //    public class Customer {
 //        @Id
-//        @Generatedvalue(strategy = GenerationType.IDENTITY)
+//        @GeneratedValue(strategy = GenerationType.IDENTITY)
 //        private int id;
 //
 //        private String name;
-//        private String email;
+//        private String eamil;
 //    }
 
     // 3. ORM에서 사용되는 주요 애너테이션
+
     // @Entity
     // : 클래스를 DB 테이블과 매핑할 때 사용
-    // - 옵션없이 사용 가능
-    // + name 옵션: 엔티티 이름을 지정, 테이블명과 다를 경우 명시
-    //   @Entity(name = "userTable")
-    //   public class user { }
+    // - 옵션 없이 사용 가능
+    // +) name 옵션: 엔티티 이름을 지정, 테이블명과 다를 경우 명시
+    //    @Entity(name = "userTable")
+    //    public class user { }
 
-    // @ Id
+    // @Id
     // : 해당 필드를 DB 테이블의 기본 키로 지정
     // - 옵션 없이 사용, 다른 애너테이션과 함께 기본 키 생성 방식이나 타입 설정 가능
     //   +) 주로 GeneratedValue와 함께 사용
@@ -69,8 +69,8 @@ public class j_ORM {
     // : 필드를 특정 테이블 열과 매핑
     // : 생략 시 기본으로 필드 이름이 열 이름으로 사용
     // +) 다양한 옵션이 있음
-    //    - name 옵션: 열 이름 지정(Colum이랑 이름이 다를때)
-    //    - nulable 옵션: 열이 null 값을 허용할지 여부를 설정 (기본값 true)
+    //    - name 옵션: 열 이름 지정
+    //    - nullable 옵션: 열이 null값을 허용할지 여부를 설정 (기본값 true)
     //    - length 옵션: String 타입의 열 길이를 지정 (기본값 255)
     //    - unique 옵션: 해당 필드의 값이 유일해야 하는지 여부를 지정 (기본값 false)
 
@@ -91,5 +91,4 @@ public class j_ORM {
 
     // 2) application.properties, application.yml
     // 애플리케이션 설정: 연결할 DB와 사용자 정보, 비밀번호 등을 설정
-
 }

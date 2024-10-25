@@ -24,13 +24,13 @@ public class f_spring_container {
     // , 자바 설정 클래스에서 @Bean 애너테이션 사용
 }
 
-// 관점 지향 프로그래밍 (AOP: Aspect Oriented Programming)
+// === 관점 지향 프로그래밍 (AOP: Aspect Oriented Programming)
 // : 애플리케이션의 핵심 로직과 '공통적인 관심사'를 분리하여 관리하는 기법
 // : 모듈화를 지향
 // > 로그, 보안, 트랜잭션 관리와 같은 '공통적인 관심사'를 핵심 비즈니스 로직과
-//   분리하여 유지보수성과 코드 가독성을 향상
+//    분리하여 유지보수성과 코드 가독성을 향상
 
 // === 이식 가능한 서비스 추상화 (PSA: Portable Service Abstraction)
 // : 특정 기술에 의존하지 않고 다양한 환경에서도 동일하게 동작할 수 있는 스프링의 추상화
 // EX) 어떤 기술을 사용하든 일관된 방식으로 DB에 접근하도록 인터페이스를 지원
-//    : JDBC, JPA 등 어떠한 DB 접근 방식이든
+//     : JDBC, JPA 등 어떠한 DB 접근 방식이든

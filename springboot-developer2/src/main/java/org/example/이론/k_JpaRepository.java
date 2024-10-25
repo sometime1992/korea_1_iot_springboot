@@ -6,7 +6,8 @@ public class k_JpaRepository {
     // : CRUD와 페이징, 정렬을 포함한 다양한 데이터 엑세스 메서드를 제공
 
     // 1. CRUD 메서드
-    // 1)save(S entity): S
+
+    // 1) save(S entity): S
     // - 새로운 엔터티를 저장하거나, 기존 엔터티를 업데이트
 
     // 2) findById(ID id)
@@ -14,7 +15,6 @@ public class k_JpaRepository {
 
     // 3) existsById(ID id): boolean
     // - 주어진 ID가 존재하는지 확인
-    // existsById(ID id): boolean 로 먼저 데이터의 있는지 없는지 여부를 확인하고 findById(ID id)로 가져옴
 
     // 4) findAll()
     // : 데이터베이스에 있는 모든 엔티티를 조회
@@ -22,7 +22,7 @@ public class k_JpaRepository {
     // 5) deleteById(ID id): void
     // : 주어진 ID의 엔티티를 삭제
 
-    // 2. JpaRepository<타입, 타입>의 구조 >> ID를 기준으로 검색, 수정, 삭제
+    // 2. JpaRepository<타입1, 타입2>의 구조
     // 1) 타입1
     // : 엔티티(Entity) 클래스 타입
     // : DB 테이블과 매핑되는 클래스
@@ -33,7 +33,6 @@ public class k_JpaRepository {
     // 3. 쿼리 메서드 사용
     // : 사용자 정의 메서드
 
-
     // - 메서드 이름으로 쿼리 생성
     // : 메서드 이름을 분석해 자동으로 쿼리 생성
     // : 주로 WHERE, LIKE, BETWEEN, ORDER BY 를 지원
@@ -42,18 +41,9 @@ public class k_JpaRepository {
     // find: 조회(select)
     // By: 뒤의 키워드로 조회
 
-
-    // EX1) '가격'이 특정 금액 '이상'인 상품 '조회'
-    // findByPriceGraterThan(int price);
-    // - GraterThan (이상)
-
-    // - @Query 어노테이션을 사용해 직접 SQL 작성
-//    findByPriceGreaterThan(1000)
-    // : SELECT * FROM product WHERE price > 1000;
-
-    // @Query("SELECT * FROM Product p WHERE p.price > :price")
-    // 반환타입 findProductsByName(@Param("price") int price);
-
+    // EX1) '가격'이 특정 금액 '이상'인 '상품' '조회'
+    // findByPriceGreaterThan(int price);
+    // - GreaterThan (이상)
 
     // EX2) '이름'에 특정 문자열이 '포함'된 '상품' '조회'
     // findByNameContaining(String keyword);
@@ -63,13 +53,19 @@ public class k_JpaRepository {
     // findByCategoryAndPriceBetween(String category, int minPrice, int maxPrice);
 
     // EX4) '특정 날짜' 이후에 생성된 '상품' 조회
-    // findByCreatedDateAfterOrderByCreatedDatedDesc(LocalDate date);
+    // find By CreatedDate After OrderBy CreatedDated Desc(LocalDate date);
     // - After (이후)
     // - OrderByA (A를 기준으로 정렬)
     // - Desc (내림차순)
 
+    // - @Query 어노테이션을 사용해 직접 SQL 작성
+//    findByPriceGreaterThan(1000)
+    // : SELECT * FROM product WHERE price > 1000;
+
+    // @Query("SELECT * FROM Product p WHERE p.price > :price")
+    // 반환타입 findProductsByPrice(@Param("price") int price);
 
 //    findByNameContaining("Phone")
-//    findByCategoryAndPriceBetween("Electronics", 500, 1500
+//    findByCategoryAndPriceBetween("Electronics", 500, 1500)
 //    findByCreatedDateAfterOrderByCreatedDateDesc(LocalDate.of(2023, 1, 1))
 }

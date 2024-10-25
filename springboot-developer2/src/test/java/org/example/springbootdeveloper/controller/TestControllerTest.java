@@ -75,7 +75,7 @@ class TestControllerTest {
                 // - TestController에서 만든 API는 응답으로 OK(200)을 반환
                 // - .isOk() 메서드로 응답코드가 맞는지 확인
                 .andExpect(status().isOk())
-                // jsonPat("$[0].필드명")
+                // jsonPath("$[0].필드명")
                 // : JSON의 응답값을 가져오는 역할을 담당
                 // : 0번째 배열에 들어있는 객체의 id, name을 가져오고 저장된 값과 같은지 확인
                 .andExpect(jsonPath("$[0].id").value(savedMember.getId()))
